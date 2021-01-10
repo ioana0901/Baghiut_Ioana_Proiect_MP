@@ -1,0 +1,83 @@
+﻿@page "/{id:int?}"
+@model CarInventory.Pages.Cars.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cars Inventory</h1>
+
+<p>
+    <a asp-page="Create">Add a new Car </a> ||
+    <a asp-page="Search"> Search a car</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Manufacturer.ManufacturerName)
+            </th>
+            <!--<th>
+                @Html.DisplayNameFor(model => model.Car[0].Details)
+            </th>-->
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].CarYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].CarCategories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CarD.Cars) {
+    string selectedRow = "";
+    if (item.ID == Model.CarID)
+    {
+        selectedRow = "table-success";
+    }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer.ManufacturerName)
+            </td>
+            <!-- <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>-->
+            <td>
+                @Html.DisplayFor(modelItem => item.CarYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @{
+                    foreach (var category in item.CarCategories)
+                    {
+                        @category.Category.ID @: @category.Category.CategoryName<br />
+                    }
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
